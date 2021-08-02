@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>App Name: A Coding Project by Wesley Sorrentino</title>
+    <title>Hundo: A Coding Project by Wesley Sorrentino</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,8 +11,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/5db21ba9c6.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="CSS/site.css">
     <link rel="stylesheet" href="CSS/prism.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Roboto&display=swap" rel="stylesheet">
 
 </head>
 
@@ -20,7 +25,7 @@
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html"><img src="Img/code-solid.png" class="d-inline-block align-text-top" width="30" height="24"> APP NAME</a>
+            <a class="navbar-brand logoFont" href="index.html"><img src="Img/code-solid.png" class="d-inline-block align-text-top" width="30" height="24"> Hundo</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -49,21 +54,83 @@
 
     <main class="flex-shrink-0">
         <div class="container py-4 px-5 mt-5">
-            <h2 class="border-1 border-bottom border-dark">The Code for APP NAME</h2>
+            <h2 class="border-1 border-bottom border-dark">The Code for Hundo</h2>
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col-lg-8">
                     <pre class="line-numbers"><code class="language-javascript">
-                        //Call Hello World
-                        function helloWorld() {
-                            alert('hello world');
-                        };
+                        // get the values from the Page
+                        function getValues() {
+                            let startValue = document.getElementById('startValue').value;
+                            let endValue = document.getElementById('endValue').value;
+                        
+                            //parse into integers
+                            startValue = parseInt(startValue);
+                            endValue = parseInt(endValue);
+                        
+                            if (Number.isInteger(startValue) && Number.isInteger(endValue)) {
+                                //call generateNumbers
+                                let numbers = generateNumbers(startValue, endValue);
+                        
+                                //call displayNumbers
+                                displayNumbers(numbers);
+                        
+                            } else {
+                                alert('You must enter a number')
+                            }
+                        }
+                        
+                        // generate numbers from the start value to the end value
+                        function generateNumbers (startValue, endValue) {
+                        
+                            let numbers = [];
+                        
+                            // Get all numbers from start to end
+                            for (let i = startValue; i <= endValue; i++) {
+                                numbers.push(i);   
+                            }
+                            
+                            return numbers;
+                        }
+                        
+                        // display the numbers and mark even numbers bold
+                        function displayNumbers (numbers) {
+                        
+                            let className = "even"
+                        
+                            let templateRows = "";
+                        
+                            for (let i = 0; i < numbers.length; i++) {
+                                
+                                let number = numbers[i];
+                        
+                                if(number % 2 == 0) {
+                                    className = "even"
+                                } else {
+                                    className = "odd";
+                                }
+                                
+                                // This does render correctly with Prism see the source
+                                templateRows += `&lt;tr>&lt;td class="${className}" >${number}&lt;/td>&lt;/tr>`
+                        
+                            }
+                            
+                            document.getElementById("results").innerHTML = templateRows;
+                        }
                     </code>
                     </pre>
                 </div> 
                 <div class="col-lg-4">
-                    <p>The Code is structered in one function.</p>
-                    <h5>Hello World</h5>
-                    <p>Hello World is a function that displays an alert with a message of "Hello World"</p>
+                    <p>The Code is structered in three functions.</p>
+                    <h5>getValues</h5>
+                    <p>getValues accepts(gets) the user input from the page. It utilizes <strong>getElementById</strong> to pull the vallues from the page. It passes those values to the <strong>generateNumbers</strong> function. 
+                        The fuction <strong>generateNumbers</strong> returns an array of values and passes that array to the <strong>displayNumbers</strong> function.</p>
+                    <h5>generateNumbers</h5>
+                    <p>generateNumbers takes in two parameters startValue and endValue. We create a variable (numbers) that holds an array. A for loop is to generate all of the numbers between <strong>startValue</strong> and <strong>endValue</strong>.</p>
+                    <h5>displayNumbers</h5>
+                    <p>displaynumbers takes in one parameter numbers. The variable numbers is an array that holds values between <strong>startValue</strong> and <strong>endValue</strong>. 
+                    We create a variable (className) that holds the name of a CSS class that we will use to bold the numbers. We create a variable templateRows that will hold the html we will write to the page. 
+                    <br><br>A for loop is used to check all of the numbers to see if they are even or odd. The remainder operator (%) is used to see if the number is divisable by two. If it returns zero than it's even. if not (else) it's odd.
+                The correct className is injected into the html row for display. Each interation of the lop adds to the templateRows variable. At the end of the loop resulting HTML rows are written to the page.</p>
                 </div>
             </div>
 
